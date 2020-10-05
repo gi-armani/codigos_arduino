@@ -1,8 +1,5 @@
-//   Projeto 5 - <span style="font-weight: 400">Interruptor de luz</span>
- 
 int botao = 9;
 int led = 7;
-//bool estadoLed = LOW;
  
 void setup()
 {
