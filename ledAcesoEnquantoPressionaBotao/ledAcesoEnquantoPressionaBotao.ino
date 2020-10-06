@@ -5,7 +5,6 @@ void setup()
 {
   pinMode(botao, INPUT_PULLUP); // define o pino do botao como entrada "INPUT"
   pinMode(led, OUTPUT);
-  pinMode(5, OUTPUT);
 }
  
 void loop()
