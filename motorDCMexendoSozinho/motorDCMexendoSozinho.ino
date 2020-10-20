@@ -7,7 +7,7 @@ void setup() {
 }
 void loop() {
   digitalWrite(motorDC, HIGH);
-  delay(1000);
+  /*delay(1000);
   digitalWrite(motorDC, LOW);
-  delay(1000);
+  delay(1000);*/
 }
