@@ -3,7 +3,7 @@
 #define motorEsq 5
 #define tmp 1000
 
-int velocidade = 255;
+int velocidade = 60;
 
 void setup(){
   pinMode(vel, OUTPUT);
