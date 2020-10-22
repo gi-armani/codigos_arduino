@@ -1,7 +1,6 @@
-int vel = 3;
+int ligaDesliga = 5;
 int motorDir = 4;
-int motorEsq = 5;
-int temp = 1000;
+int motorEsq = 3;
 
 int botaoDir = 10;
 int botaoEsq = 11;
@@ -9,11 +8,11 @@ int botaoEsq = 11;
 int velocidade = 100;
 
 void setup(){
-  pinMode(vel, OUTPUT);
+  pinMode(ligaDesliga, OUTPUT);
   pinMode(motorDir, OUTPUT);
   pinMode(motorEsq, OUTPUT);
 
-  analogWrite(vel,0);
+  analogWrite(ligaDesliga,0);
   digitalWrite(motorDir,LOW);
   digitalWrite(motorEsq,LOW);
 
@@ -23,15 +22,15 @@ void setup(){
 
 void loop(){
   if(digitalRead(botaoDir) == HIGH && digitalRead(botaoEsq) == HIGH) {
-    analogWrite(vel,0);
+    analogWrite(ligaDesliga,0);
     digitalWrite(motorDir,LOW);
     digitalWrite(motorEsq,LOW);
   } else if(digitalRead(botaoDir) == LOW) {
-    analogWrite(vel,velocidade);
+    analogWrite(ligaDesliga,velocidade);
     digitalWrite(motorDir,HIGH);
     digitalWrite(motorEsq,LOW);
   } else {
-    analogWrite(vel,velocidade);
+    analogWrite(ligaDesliga,velocidade);
     digitalWrite(motorDir,LOW);
     digitalWrite(motorEsq,HIGH);
   }
