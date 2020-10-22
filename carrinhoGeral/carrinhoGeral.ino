@@ -15,7 +15,7 @@ int angulo;
 
 void setup() {
   meuServo.attach(7);
-  meuServo.write(90);
+  meuServo.write(95);
   angulo = meuServo.read();
 
   pinMode(ligaDesligaDC, OUTPUT);
@@ -46,7 +46,7 @@ void loop() {
   }
 
   while(digitalRead(botaoDirServo)==LOW) {
-    if(angulo > 45) {
+    if(angulo > 50) {
       angulo = angulo - 1;
       meuServo.write(angulo);
       delay(20);
@@ -54,7 +54,7 @@ void loop() {
   }
   
   while(digitalRead(botaoEsqServo)==LOW) {
-    if(angulo < 135) {
+    if(angulo < 140) {
       angulo = angulo + 1;
       meuServo.write(angulo);
       delay(20);
