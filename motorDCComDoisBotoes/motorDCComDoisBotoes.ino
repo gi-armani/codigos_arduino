@@ -21,17 +21,19 @@ void setup(){
 }
 
 void loop(){
-  if(digitalRead(botaoDir) == HIGH && digitalRead(botaoEsq) == HIGH) {
-    analogWrite(ligaDesliga,0);
-    digitalWrite(motorDir,LOW);
-    digitalWrite(motorEsq,LOW);
-  } else if(digitalRead(botaoDir) == LOW) {
+  while(digitalRead(botaoDir) == LOW){
     analogWrite(ligaDesliga,velocidade);
     digitalWrite(motorDir,HIGH);
     digitalWrite(motorEsq,LOW);
-  } else {
+  }
+  while(digitalRead(botaoEsq) == LOW){
     analogWrite(ligaDesliga,velocidade);
     digitalWrite(motorDir,LOW);
     digitalWrite(motorEsq,HIGH);
   }
+
+  analogWrite(ligaDesliga,0);
+  digitalWrite(motorDir,LOW);
+  digitalWrite(motorEsq,LOW);
+  
 }
