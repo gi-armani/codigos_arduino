@@ -5,7 +5,7 @@ Servo meuServo;
 int ligaDesligaDC = 5;
 int DirDC = 4;
 int EsqDC = 3;
-int velocidadeDC = 100;
+int velocidadeDC = 255;
 
 int botaoDirDC = 9;
 int botaoEsqDC = 10;
@@ -46,7 +46,7 @@ void loop() {
   }
 
   while(digitalRead(botaoDirServo)==LOW) {
-    if(angulo > 50) {
+    if(angulo > 10) {
       angulo = angulo - 1;
       meuServo.write(angulo);
       delay(20);
@@ -54,7 +54,7 @@ void loop() {
   }
   
   while(digitalRead(botaoEsqServo)==LOW) {
-    if(angulo < 140) {
+    if(angulo < 180) {
       angulo = angulo + 1;
       meuServo.write(angulo);
       delay(20);
