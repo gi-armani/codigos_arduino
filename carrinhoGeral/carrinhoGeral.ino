@@ -2,13 +2,13 @@
 
 Servo meuServo;
 
-int ligaDesligaDC = 5;
+int ligaDesligaDC = 3;
 int DirDC = 4;
-int EsqDC = 3;
+int EsqDC = 5;
 int velocidadeDC = 255;
 
-int botaoDirDC = 9;
-int botaoEsqDC = 10;
+int botaoDirDC = 10;
+int botaoEsqDC = 11;
 int botaoDirServo = 12;
 int botaoEsqServo = 13;
 int angulo;
