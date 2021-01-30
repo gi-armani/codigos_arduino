@@ -12,6 +12,7 @@ void setup() {
   pinMode(ledVermelho,OUTPUT);  
 
   Serial.begin(9600);
+  Serial.println();
   Serial.println("Tudo certo");
   delay(3000);
 }
@@ -21,20 +22,29 @@ void loop() {
   digitalWrite(ledVerde,LOW);
   digitalWrite(ledVermelho,HIGH); 
   lerLuz(); 
-  delay(3000);  
+  delay(1500);  
   analogWrite(ledAzul,0);     
-  analogWrite(ledVerde,85);
+  analogWrite(ledVerde,255);
   analogWrite(ledVermelho,255);
   lerLuz(); 
-  delay(3000);    
+  delay(1500);    
   digitalWrite(ledAzul,LOW);
   digitalWrite(ledVerde,HIGH);
   digitalWrite(ledVermelho,LOW);  
   lerLuz(); 
-  delay(3000);  
+  delay(1500);  
 }
 
 void lerLuz(){
   valorLuz = analogRead(pinoSensorLuz);
-  Serial.println(valorLuz);
+  if(valorLuz > 885) {
+    Serial.print("VERDE: ");
+    Serial.println(valorLuz);
+  } else if(valorLuz > 850) {
+    Serial.print("AMARELO: ");
+    Serial.println(valorLuz);
+  } else {
+    Serial.print("VERMELHO: ");
+    Serial.println(valorLuz);
+  }
 }
