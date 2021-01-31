@@ -11,6 +11,7 @@ int anguloServo;
 int sensorIR = 22;
 IRrecv IRR(sensorIR);
 decode_results results;
+int botao = 0;
 
 void setup() {
   pinMode(ligaDesligaDC, OUTPUT);
@@ -30,8 +31,10 @@ void setup() {
 
 void loop() {
   if (IRR.decode()) {
-    int botao = IRR.results.value;
-    Serial.println(IRR.results.value);
+    if(IRR.results.value != 4294967295) {
+      botao = IRR.results.value;
+    } 
+    Serial.println(botao);
 
     switch (botao) {
       case 16761405: 
@@ -57,7 +60,7 @@ void loop() {
 }
 
 void mexeServoParaDireita(){
-  Serial.println("Servo para a direita");
+   Serial.println("Servo para a direita");
 }
 
 void mexeServoParaEsquerda(){
