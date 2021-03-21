@@ -73,16 +73,16 @@ void paraFrente(){
     digitalWrite(dirSentidoHorario,HIGH);
     digitalWrite(dirSentidoAnti,LOW);
     analogWrite(esqLigaDesliga,velocidade);
-    digitalWrite(esqSentidoHorario,HIGH);
-    digitalWrite(esqSentidoAnti,LOW);
+    digitalWrite(esqSentidoHorario,LOW);
+    digitalWrite(esqSentidoAnti,HIGH);
 }
 void paraTras(){
     analogWrite(dirLigaDesliga,velocidade);
     digitalWrite(dirSentidoHorario,LOW);
     digitalWrite(dirSentidoAnti,HIGH);
     analogWrite(esqLigaDesliga,velocidade);
-    digitalWrite(esqSentidoHorario,LOW);
-    digitalWrite(esqSentidoAnti,HIGH);
+    digitalWrite(esqSentidoHorario,HIGH);
+    digitalWrite(esqSentidoAnti,LOW);
 }
 void paraDireita(){
     analogWrite(dirLigaDesliga,velocidade);
