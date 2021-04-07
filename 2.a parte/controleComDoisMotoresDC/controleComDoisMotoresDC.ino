@@ -85,12 +85,14 @@ void paraTras(){
     digitalWrite(esqSentidoAnti,HIGH);
 }
 void paraDireita(){
-    analogWrite(dirLigaDesliga,velocidade);
-    digitalWrite(dirSentidoHorario,HIGH);
-    digitalWrite(dirSentidoAnti,LOW);
+  Serial.println("Pra direita");
+    
     analogWrite(esqLigaDesliga,0);
     digitalWrite(esqSentidoHorario,LOW);
     digitalWrite(esqSentidoAnti,LOW);
+    analogWrite(dirLigaDesliga,velocidade);
+    digitalWrite(dirSentidoHorario,HIGH);
+    digitalWrite(dirSentidoAnti,LOW);
 }
 void paraEsquerda(){
     analogWrite(dirLigaDesliga,0);
