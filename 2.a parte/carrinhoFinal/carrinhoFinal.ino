@@ -1,15 +1,15 @@
 #include <IRremote.h>
 
 //Sensor de distancia
-#define echoPin 5 
-#define trigPin 4 
+#define echoPin 13 
+#define trigPin 12 
 long duration; //duration of sound wave travel
 int distance; //distance measurement
 
 //LEDs distancia
-int ledVermelho = 7;
-int ledVerde = 8;
-int ledAzul = 9;
+int ledVermelho = 22;
+int ledVerde = 23;
+int ledAzul = 24;
 
 //Controle
 int RECV_PIN = 11;
@@ -49,6 +49,7 @@ void setup() {
 
   //Controle
   IRR.enableIRIn();
+  IRR.blink13(true);
 
   //Motores DC
   pinMode(dirLigaDesliga, OUTPUT);
@@ -173,8 +174,8 @@ void printaMarcha(int marcha){
 }
 
 void controle(){
-  if (IRR.decode()) { // devolve 0 ou 1 se esta apertando botao ou nao
-    int botao = IRR.results.value; // passa o codigo do botao
+  if (IRR.decode(&results)) { // devolve 0 ou 1 se esta apertando botao ou nao
+    int botao = results.value; // passa o codigo do botao
     
     switch (botao) {
       case 16736925: 
@@ -201,7 +202,7 @@ void controle(){
       case CODIGO DO BOTAO 1:
         printaMarcha(1);
         break;
-
+      
       case CODIGO DO BOTAO 2:
         printaMarcha(2);
         break;
@@ -211,13 +212,14 @@ void controle(){
         break;
       */
     } 
+    Serial.println(results.value, HEX);
     IRR.resume(); // Receive the next value
   }
 }
 
 void loop() {
   
-  medirDistancia();
+  //medirDistancia();
   controle();
 
 }
