@@ -1,3 +1,5 @@
+#include <IRremote.h>
+
 //Sensor de distancia
 #define echoPin 5 
 #define trigPin 4 
@@ -28,6 +30,10 @@ byte seven_seg_digits[4][7] =  { { 1,1,1,1,1,1,0 },  // = Digito 0
                                  { 0,1,1,0,0,0,0 },  // = Digito 1
                                  { 1,1,0,1,1,0,1 },  // = Digito 2
                                  { 1,1,1,1,0,0,1 },  // = Digito 3
+                                };
+//Marcha
+int marchaGlobal = 0;
+
 void setup() {
   //Sensor de distancia
   pinMode(trigPin, OUTPUT);
@@ -57,7 +63,18 @@ void setup() {
   analogWrite(esqLigaDesliga,0);
   digitalWrite(esqSentidoHorario,LOW);
   digitalWrite(esqSentidoAnti,LOW);
-  
+
+  //Display
+  pinMode(2, OUTPUT); //Pino 2 do Arduino ligado ao segmento A  
+  pinMode(3, OUTPUT); //Pino 3 do Arduino ligado ao segmento B
+  pinMode(4, OUTPUT); //Pino 4 do Arduino ligado ao segmento C
+  pinMode(5, OUTPUT); //Pino 5 do Arduino ligado ao segmento D
+  pinMode(6, OUTPUT); //Pino 6 do Arduino ligado ao segmento E
+  pinMode(7, OUTPUT); //Pino 7 do Arduino ligado ao segmento F
+  pinMode(8, OUTPUT); //Pino 8 do Arduino ligado ao segmento G
+  pinMode(9, OUTPUT); //Pino 9 do Arduino ligado ao segmento PONTO
+
+  printaMarcha(0);
 }
 
 void medirDistancia(){
@@ -98,6 +115,8 @@ void moverParaFrente(){
   analogWrite(esqLigaDesliga,velocidade);
   digitalWrite(esqSentidoHorario,LOW);
   digitalWrite(esqSentidoAnti,HIGH);
+
+  if(marchaGlobal == 0) printaMarcha(1);
 }
 
 void moverParaTras(){
@@ -107,6 +126,8 @@ void moverParaTras(){
   analogWrite(esqLigaDesliga,velocidade);
   digitalWrite(esqSentidoHorario,HIGH);
   digitalWrite(esqSentidoAnti,LOW);
+
+  if(marchaGlobal == 0) printaMarcha(1);
 }
 
 void moverParaDireita(){
@@ -116,6 +137,8 @@ void moverParaDireita(){
   analogWrite(dirLigaDesliga,velocidade);
   digitalWrite(dirSentidoHorario,HIGH);
   digitalWrite(dirSentidoAnti,LOW);
+
+  if(marchaGlobal == 0) printaMarcha(1);
 }
 
 void moverParaEsquerda(){
@@ -125,6 +148,8 @@ void moverParaEsquerda(){
   analogWrite(esqLigaDesliga,velocidade);
   digitalWrite(esqSentidoHorario,HIGH);
   digitalWrite(esqSentidoAnti,LOW);
+
+  if(marchaGlobal == 0) printaMarcha(1);
 }
 
 void pararMotores(){
@@ -134,9 +159,20 @@ void pararMotores(){
   analogWrite(esqLigaDesliga,0);
   digitalWrite(esqSentidoHorario,LOW);
   digitalWrite(esqSentidoAnti,LOW);
+
+  printaMarcha(0);
 }
 
-void controleMotores(){
+void printaMarcha(int marcha){
+  marchaGlobal = marcha;
+  int portaSegmento = 2;
+  for (int segmento = 0; segmento < 7; segmento++){ 
+    digitalWrite(portaSegmento, seven_seg_digits[marcha][segmento]);
+    portaSegmento++;
+  }
+}
+
+void controle(){
   if (IRR.decode()) { // devolve 0 ou 1 se esta apertando botao ou nao
     int botao = IRR.results.value; // passa o codigo do botao
     
@@ -160,6 +196,20 @@ void controleMotores(){
       case 16712445:
         pararMotores();
         break;
+
+      /*
+      case CODIGO DO BOTAO 1:
+        printaMarcha(1);
+        break;
+
+      case CODIGO DO BOTAO 2:
+        printaMarcha(2);
+        break;
+
+      case CODIGO DO BOTAO 3:
+        printaMarcha(3);
+        break;
+      */
     } 
     IRR.resume(); // Receive the next value
   }
@@ -168,6 +218,6 @@ void controleMotores(){
 void loop() {
   
   medirDistancia();
-  controleMotores();
+  controle();
 
 }
