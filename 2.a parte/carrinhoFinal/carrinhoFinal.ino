@@ -6,8 +6,8 @@ int distance; //distance measurement
 
 //LEDs distancia
 int ledVermelho = 7;
-int ledAmarelo = 8;
-int ledVerde = 9;
+int ledVerde = 8;
+int ledAzul = 9;
 
 //Controle
 int RECV_PIN = 11;
@@ -38,8 +38,8 @@ void setup() {
   
   //LEDs distancia
   pinMode(ledVermelho, OUTPUT);
-  pinMode(ledAmarelo, OUTPUT);
   pinMode(ledVerde, OUTPUT);
+  pinMode(ledAzul, OUTPUT);
 
   //Controle
   IRR.enableIRIn();
@@ -75,32 +75,20 @@ void medirDistancia(){
   Serial.println(" cm");
   
   if(distance < 50 && distance > 20){
-    apagaLed(ledVermelho);
-    apagaLed(ledVerde);
-    piscaLed(ledAmarelo);
+    trocaCorLed(255, 255, 0); //Amarelo
   }
   else if(distance < 20){
-    apagaLed(ledAmarelo);
-    apagaLed(ledVerde);
-    piscaLed(ledVermelho); 
+    trocaCorLed(255, 0, 0); //Vermelho
   }
   else{
-    apagaLed(ledAmarelo);
-    apagaLed(ledVermelho);
-    piscaLed(ledVerde);
+    trocaCorLed(0, 255, 0); //Verde
   }
 }
 
-void piscaLed(int led){
-  digitalWrite(led, HIGH);
-  delay(500);
-  digitalWrite(led, LOW);
-  delay(500);
-}
-
-void apagaLed(int led){
-  delay(1000);
-  digitalWrite(led, LOW);
+void trocaCorLed(int red, int green, int blue){
+  analogWrite(ledVermelho, red);
+  analogWrite(ledVerde, green);
+  analogWrite(ledAzul, blue);  
 }
 
 void moverParaFrente(){
@@ -173,7 +161,6 @@ void controleMotores(){
         pararMotores();
         break;
     } 
-    
     IRR.resume(); // Receive the next value
   }
 }
