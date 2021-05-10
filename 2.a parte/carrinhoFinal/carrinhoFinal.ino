@@ -1,28 +1,26 @@
 #include <IRremote.h>
 
 //Sensor de distancia
-#define echoPin 13 
-#define trigPin 12 
+#define echoPin 11
+#define trigPin 10 
 long duration; //duration of sound wave travel
 int distance; //distance measurement
 
 //LEDs distancia
-int ledVermelho = 22;
-int ledVerde = 23;
-int ledAzul = 24;
+int ledVermelho = 32;
+int ledVerde = 33;
+int ledAzul = 34;
 
 //Controle
-int RECV_PIN = 11;
-IRrecv IRR(RECV_PIN);
-decode_results results;
+int RECV_PIN = 22;
 
 //Motores DC
-int dirLigaDesliga = 46;
-int dirSentidoHorario = 49;
-int dirSentidoAnti = 48;
-int esqLigaDesliga = 47;
-int esqSentidoHorario = 50;
-int esqSentidoAnti = 51;
+int dirLigaDesliga = 47;
+int dirSentidoHorario = 50;
+int dirSentidoAnti = 51;
+int esqLigaDesliga = 46;
+int esqSentidoHorario = 49;
+int esqSentidoAnti = 48;
 int velocidade = 255;
 
 //Display 7 segmentos
@@ -48,8 +46,7 @@ void setup() {
   pinMode(ledAzul, OUTPUT);
 
   //Controle
-  IRR.enableIRIn();
-  IRR.blink13(true);
+  IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK);
 
   //Motores DC
   pinMode(dirLigaDesliga, OUTPUT);
@@ -110,23 +107,24 @@ void trocaCorLed(int red, int green, int blue){
 }
 
 void moverParaFrente(){
-  analogWrite(dirLigaDesliga,velocidade);
-  digitalWrite(dirSentidoHorario,HIGH);
-  digitalWrite(dirSentidoAnti,LOW);
-  analogWrite(esqLigaDesliga,velocidade);
-  digitalWrite(esqSentidoHorario,LOW);
-  digitalWrite(esqSentidoAnti,HIGH);
-
-  if(marchaGlobal == 0) printaMarcha(1);
-}
-
-void moverParaTras(){
+  
   analogWrite(dirLigaDesliga,velocidade);
   digitalWrite(dirSentidoHorario,LOW);
   digitalWrite(dirSentidoAnti,HIGH);
   analogWrite(esqLigaDesliga,velocidade);
   digitalWrite(esqSentidoHorario,HIGH);
   digitalWrite(esqSentidoAnti,LOW);
+
+  if(marchaGlobal == 0) printaMarcha(1);
+}
+
+void moverParaTras(){
+  analogWrite(dirLigaDesliga,velocidade);
+  digitalWrite(dirSentidoHorario,HIGH);
+  digitalWrite(dirSentidoAnti,LOW);
+  analogWrite(esqLigaDesliga,velocidade);
+  digitalWrite(esqSentidoHorario,LOW);
+  digitalWrite(esqSentidoAnti,HIGH);
 
   if(marchaGlobal == 0) printaMarcha(1);
 }
@@ -174,52 +172,50 @@ void printaMarcha(int marcha){
 }
 
 void controle(){
-  if (IRR.decode(&results)) { // devolve 0 ou 1 se esta apertando botao ou nao
-    int botao = results.value; // passa o codigo do botao
+  if (IrReceiver.decode()) { // devolve 0 ou 1 se esta apertando botao ou nao
+     // passa o codigo do botao
     
-    switch (botao) {
-      case 16736925: 
+    switch (IrReceiver.decodedIRData.decodedRawData) {
+      case 3108437760:
+        Serial.println("duda");
         moverParaFrente();
         break;
       
-      case 16754775:
+      case 3927310080:
         moverParaTras();
         break;
       
-     case 16761405: 
+     case 3158572800:
         moverParaDireita();
         break;
       
-      case 16720605:
+     case 3141861120:
         moverParaEsquerda();
         break;
 
-      case 16712445:
+     case 3208707840:
         pararMotores();
         break;
 
-      /*
-      case CODIGO DO BOTAO 1:
+     case 4077715200:
         printaMarcha(1);
         break;
       
-      case CODIGO DO BOTAO 2:
+     case 3877175040:
         printaMarcha(2);
         break;
 
-      case CODIGO DO BOTAO 3:
+     case 2707357440:
         printaMarcha(3);
         break;
-      */
+      
     } 
-    Serial.println(results.value, HEX);
-    IRR.resume(); // Receive the next value
+    IrReceiver.resume(); // Receive the next value
   }
 }
 
 void loop() {
   
-  //medirDistancia();
+  medirDistancia();
   controle();
-
 }

@@ -35,6 +35,7 @@ void loop(){
 
   delay(2000);
 
+/*
   // Desliga os dois
   analogWrite(dirLigaDesliga,0);
   digitalWrite(dirSentidoHorario,LOW);
@@ -65,5 +66,5 @@ void loop(){
   analogWrite(esqLigaDesliga,0);
   digitalWrite(esqSentidoHorario,LOW);
 
-  delay(2000);
+  delay(2000);*/
 }
