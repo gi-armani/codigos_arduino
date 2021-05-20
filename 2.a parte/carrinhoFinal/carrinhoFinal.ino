@@ -7,9 +7,9 @@ long duration; //duration of sound wave travel
 int distance; //distance measurement
 
 //LEDs distancia
-int ledVermelho = 32;
-int ledVerde = 33;
-int ledAzul = 34;
+int ledVermelho = 7;
+int ledVerde = 6;
+int ledAzul = 5;
 
 //Controle
 int RECV_PIN = 22;
@@ -46,7 +46,7 @@ void setup() {
   pinMode(ledAzul, OUTPUT);
 
   //Controle
-  IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK);
+  //IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK);
 
   //Motores DC
   pinMode(dirLigaDesliga, OUTPUT);
@@ -172,7 +172,7 @@ void printaMarcha(int marcha){
 }
 
 void controle(){
-  if (IrReceiver.decode()) { // devolve 0 ou 1 se esta apertando botao ou nao
+  /*if (IrReceiver.decode()) { // devolve 0 ou 1 se esta apertando botao ou nao
      // passa o codigo do botao
     
     switch (IrReceiver.decodedIRData.decodedRawData) {
@@ -211,7 +211,7 @@ void controle(){
       
     } 
     IrReceiver.resume(); // Receive the next value
-  }
+  }*/
 }
 
 void loop() {
